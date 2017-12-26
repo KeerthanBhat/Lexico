@@ -17,7 +17,7 @@ class Word(object):
         self._synonyms = kwargs.get('_synonyms', list())
         self._antonyms = kwargs.get('_antonyms', list())
         self._translations = kwargs.get('_translations', list())
-
+            
     def __repr__(self):
         return 'Word({})'.format(self.word)
 
@@ -88,7 +88,11 @@ class Word(object):
         API_KEY = load_api_key()
         WORD_API = create_word_api(API_KEY)
         definitions = WORD_API.getDefinitions(word, limit=5)
-        data = [definition.text for definition in definitions]
+        try:
+            data = [definition.text for definition in definitions]
+        except TypeError:
+            click.echo('Word doesn\'t exist. Please check the spelling.')
+            exit()
         return data
 
     @staticmethod
