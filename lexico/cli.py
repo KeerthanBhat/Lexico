@@ -1,7 +1,6 @@
 import sys
 import click
 from halo import Halo
-from PIL import Image
 import subprocess
 
 from .errors import ConfigFileError
@@ -86,7 +85,7 @@ def view():
     '''Lists all the words present in your dictionary.'''
     #TODO: Option for file output
     #TODO: More information/table columns
-    spinner = Halo(text='LOADING', spinner='growVertical', color='red')
+    spinner = Halo(text='LOADING', spinner='dots3', color='red')
     spinner.start()
     words = get_words()
     formatted_words = format_words(words)
