@@ -29,8 +29,9 @@ def add(word):
         click.echo('You need to initialize the application.')
         click.echo('Run:\n\t\t $ lexico init')
     else:
+        word_string = word_data.stringify()
         spinner.stop()
-        click.echo_via_pager(word_data.stringify())
+        click.echo_via_pager(word_string)
 
 
 @lexico.command()

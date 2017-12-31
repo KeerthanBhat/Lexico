@@ -1,5 +1,4 @@
 import json
-from halo import Halo
 
 import click
 from wordnik import *
@@ -177,8 +176,6 @@ class Word(object):
 
     def stringify(self):
         
-        spinner = Halo(text='LOADING', spinner='dot', color='yellow')
-        spinner.start()
         # Representation for meanings
         meanings = list()
         for index, meaning in enumerate(self.meanings, start=1):
@@ -238,7 +235,6 @@ class Word(object):
 
         s = [create_entry(heading, data, separator) for heading, data, separator in headings if data is not None]
      
-        spinner.stop()
         return '\n\n'.join(s)
 
     def jsonify(self):
