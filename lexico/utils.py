@@ -166,8 +166,12 @@ def fetch_word(word):
             API_KEY = load_api_key()
             word_api = create_word_api(API_KEY)
             word_object = Word(word)
-            # Store result in the Words and Vocabulary table
-            save_word(word_object)
+
+            if not word_object.meanings:
+                return None
+            else:
+                # Store result in the Words and Vocabulary table
+                save_word(word_object)
 
         return word_object
 
