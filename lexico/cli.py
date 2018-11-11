@@ -1,8 +1,9 @@
 import sys
 import click
+import csv
 
 from .errors import ConfigFileError
-from .utils import fetch_word, save_api_key, load_api_key, save_word, get_words, check_initialization, tabulate_words, initialize_db, initialize_application, has_api_key, has_db, format_words
+from .utils import fetch_word, save_api_key, load_api_key, save_word, get_words, check_initialization, tabulate_words, initialize_db, initialize_application, has_api_key, has_db, format_words, format_words_for_export
 
 
 @click.group()
@@ -78,9 +79,22 @@ def init():
 @lexico.command()
 def view():
     '''Lists all the words present in your dictionary.'''
-    #TODO: Option for file output
     #TODO: More information/table columns
     words = get_words()
     formatted_words = format_words(words)
     display_words = tabulate_words(formatted_words)
     click.echo_via_pager(display_words)
+
+
+@lexico.command()
+def export():
+    '''Exports the current vocabulary into a CSV file.'''
+    words = get_words()
+    formatted_words = format_words_for_export(words)
+    with open('vocabulary.csv', 'w', newline='') as outputFile:
+        outputWriter = csv.writer(outputFile)
+        outputWriter.writerow(['WORD','LOOKUPS','CREATED AT','LAST LOOKUP'])
+        outputWriter.writerow(['','','',''])
+        for word in formatted_words:
+            outputWriter.writerow(list(word))
+
